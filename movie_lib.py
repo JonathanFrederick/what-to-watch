@@ -10,7 +10,7 @@ class User:
         self.user_ratings = {}
 
     def get_ratings(rating_list):
-        self.user_ratings = {rat[1] : rat[2] for rat in rating_list if rat[0] == self.user_id}
+        self.user_ratings = {rat[1] : Rating(rat[2]) for rat in rating_list if rat[0] == self.user_id}
 
 
 class Rating:
@@ -39,7 +39,7 @@ class Movie:
         self.avg_ratings = None
 
     def get_ratings(rating_list):
-        self.movie_ratings = {rat[0] : rat[2] for rat in rating_list if rat[1] == self.movie_id}
+        self.movie_ratings = {rat[0] : Rating(rat[2]) for rat in rating_list if rat[1] == self.movie_id}
 
     def avg_ratings(rating_list):
         self.avg_ratings = sum(get_ratings(rating_list))/len(self.movie_ratings)
