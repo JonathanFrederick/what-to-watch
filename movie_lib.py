@@ -9,9 +9,9 @@ class User:
 #        self.occupation = user_occupation
         self.user_ratings = {}
 
-    def get_ratings(rating_list):
+    def get_ratings(self, rating_list):
         self.user_ratings = {rat[1] : Rating(rat[2]) for rat in rating_list if rat[0] == self.user_id}
-
+        return self.user_ratings
 
 class Rating:
 
@@ -20,6 +20,9 @@ class Rating:
         self.item_id = rating_item
         self.rating = rating_
 #        self.timestamp = rating_timestamp
+
+    def __repr__(self):
+        return 'Rating({})'.format(self.rating)
 
 
 class Movie:
@@ -38,13 +41,14 @@ class Movie:
         self.movie_ratings = []
         self.avg_ratings = None
 
-    def get_ratings(rating_list):
+    def get_ratings(self, rating_list):
         self.movie_ratings = {rat[0] : Rating(rat[2]) for rat in rating_list if rat[1] == self.movie_id}
+        return self.movie_ratings
 
-    def avg_ratings(rating_list):
+    def avg_ratings(self, rating_list):
         self.avg_ratings = sum(get_ratings(rating_list))/len(self.movie_ratings)
 
-    def name_for_id(ident):
+    def name_for_id(self, ident):
         if self.item_id == ident:
             return self.title
 
