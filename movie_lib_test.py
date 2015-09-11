@@ -18,9 +18,10 @@ def test_user_init():
 
 def test_user_get_ratings():
     for user in users:
-        print(type(users[user]))
-        print(ratings)
+        # print(type(users[user]))
+        # print(ratings)
         users[user].get_ratings(ratings)
-    assert users[123].user_ratings == {987 : 3, 876 : 4}
-    assert users[345].user_ratings == {876 : 4, 321 : 2}
-    assert users[567].user_ratings == {987 : 5, 543 : 3}
+    print(users[123].user_ratings)
+    assert users[123].user_ratings == {987: Rating(3), 876: Rating(4)}
+    assert users[345].user_ratings == {876: Rating(4), 321: Rating(2)}
+    assert users[567].user_ratings == {987: Rating(5), 543: Rating(3)}
