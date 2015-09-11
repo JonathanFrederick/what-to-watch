@@ -27,7 +27,7 @@ class Rating:
 
 class Movie:
 
-    def __init__(self, movie_id, **kwargs):
+    def __init__(self, movie_id, movie_title, **kwargs):
         self.item_id = movie_id
         self.title = movie_title
 #        self.release = release_date
