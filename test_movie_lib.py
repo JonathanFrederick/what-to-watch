@@ -12,19 +12,19 @@ ratings = [[234, 987, 3],
 
 def test_user_init():
     """tests User init"""
-    assert users[123].user_id == 234
-    assert users[123].user_id != 123
-    assert users[345].user_id == 456
-    assert users[567].user_id == 678
+    assert users[123].ident == 234
+    assert users[123].ident != 123
+    assert users[345].ident == 456
+    assert users[567].ident == 678
 
 def test_user_get_ratings():
     """tests User.get_ratings() and Rating.__init__"""
     for user in users:
          users[user].get_ratings(ratings)
-    users[123].user_ratings[987].rating == 3
-    users[123].user_ratings[987].rating != 2
-    users[345].user_ratings[876].rating == 4
-    users[567].user_ratings[987].rating == 5
+    users[123].user_ratings[987].stars == 3
+    users[123].user_ratings[987].stars != 2
+    users[345].user_ratings[876].stars == 4
+    users[567].user_ratings[987].stars == 5
 
 
     # assert users[123].user_ratings == {987: Rating(3), 876: Rating(4)}
@@ -33,25 +33,27 @@ def test_user_get_ratings():
 
 def test_movie_init():
     """tests Movie init"""
-    assert movies[543].item_id == 876
+    assert movies[543].ident == 876
     assert movies[543].title == "A Bug's Life"
-    assert movies[321].item_id == 987
+    assert movies[321].ident == 987
     assert movies[321].title == "Toy Story"
-    assert movies[432].item_id == 654
+    assert movies[432].ident == 654
     assert movies[432].title == "The Incredibles"
-    assert movies[432].item_id != 135
+    assert movies[432].ident != 135
     assert movies[432].title != "Cars"
 
 def test_movie_get_ratings():
     """tests Movie.get_ratings"""
     for movie in movies:
         movies[movie].get_ratings(ratings)
-    print(movies[543].movie_ratings[456])
-    print(movies[321])
-    print(movies[432])
-    assert movies[543].movie_ratings[456].rating == 4
-    assert movies[543].movie_ratings[234].rating == 4
-    assert movies[543].movie_ratings[234].rating != 2
-    assert movies[321].movie_ratings[234].rating == 3
-    assert movies[321].movie_ratings[678].rating == 5
-    assert movies[432].movie_ratings[678].rating == 3
+    assert movies[543].movie_ratings[456].stars == 4
+    assert movies[543].movie_ratings[234].stars == 4
+    assert movies[543].movie_ratings[234].stars != 2
+    assert movies[321].movie_ratings[234].stars == 3
+    assert movies[321].movie_ratings[678].stars == 5
+    assert movies[432].movie_ratings[678].stars == 3
+
+
+
+# def test_movie_avg_ratings():
+#     """tests avg_ratings"""
