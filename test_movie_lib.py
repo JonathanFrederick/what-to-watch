@@ -91,6 +91,11 @@ def test_movie_avg_ratings():
     # assert all_movies[65].avg_ratings() == 2.5
 
 
+def test_euclidean_distance():
+    assert euclidean_distance([1, 2, 3, 4], [1, 2, 3, 4]) == 1.0
+    assert euclidean_distance([], [1, 2, 3, 4]) == 0
+    assert round(euclidean_distance([1, 2, 3, 4], [4, 3, 2, 1]), 2) == 0.18
+
 def test_load_data():
 
     pass
