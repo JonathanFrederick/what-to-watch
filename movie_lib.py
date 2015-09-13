@@ -1,5 +1,9 @@
 """Movie Library"""
 
+all_movies = {}
+all_users = {}
+
+
 class User:
 
     def __init__(self, user_id, **kwargs):
@@ -7,22 +11,38 @@ class User:
 #        self.age = user_age
 #        self.gender = user_gender
 #        self.occupation = user_occupation
-        self.user_ratings = {}
+        self.ratings = {}
+        all_users[self.ident] = self
+
+    def add_rating(self,rating):
+        self.ratings[rating.item_id] = rating
 
     def get_ratings(self, rating_list):
-        self.user_ratings = {rat[1] : Rating(rat[2]) for rat in rating_list if rat[0] == self.ident}
-        return self.user_ratings
+        return self.ratings.values()
+
+    def __str__(self):
+        return 'User(user_id={})'.format(self.indent)
+
+    def __repr__(self):
+        return self.__str__()
 
 class Rating:
 
-    def __init__(self, rating, rating_user=None, rating_item=None, **kwargs):
+    def __init__(self, rating_user, rating_item, rating, **kwargs):
         self.user_id = rating_user
         self.item_id = rating_item
         self.stars = rating
 #        self.timestamp = rating_timestamp
 
+        all_movies[self.item_id].add_rating(self)
+        all_users[self.user_id].add_rating(self)
+
+
+    def __str__(self):
+        return 'Rating(rating_user={}, rating_item={}, rating={})'.format(self.user_id, self.item_id, self.stars)
+
     def __repr__(self):
-        return 'Rating({})'.format(self.stars)
+        return self.__str__()
 
 
 class Movie:
@@ -38,21 +58,29 @@ class Movie:
 #                            'Children\'s', 'Comedy', 'Crime', 'Documentary',
 #                            'Drama', 'Fantasy', 'Film-Noir', 'Horror', 'Musical',
 #                            'Mystery', 'Romance', 'Sci-Fi', 'Thriller', 'War', 'Western']
-        self.movie_ratings = []
+        self.ratings = {}
         self.avg_ratings = None
+        all_movies[self.ident] = self
 
-    def get_ratings(self, rating_list):
-        self.movie_ratings = {rat[0] : Rating(rat[2]) for rat in rating_list if rat[1] == self.ident}
-        return self.movie_ratings
+
+    def add_rating(self, rating):
+        self.ratings[rating.user_id] = rating
+
+    def get_ratings(self):
+        return self.ratings
 
     def avg_ratings(self, rating_list):
-        self.avg_ratings = sum(get_ratings(rating_list))/len(self.movie_ratings)
+        self.avg_ratings = sum([x.stars for x in self.get_ratings()])/len(self.ratings)
 
     def name_for_id(self, ident):
         if self.ident == ident:
             return self.title
 
+    def __str__(self):
+        return 'Movie(movie_id={}, movie_title={})'.format(self.ident, repr(self.title))
 
+    def __repr__(self):
+        return self.__str__()
 
 def main():
     pass
