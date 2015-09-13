@@ -17,7 +17,7 @@ class User:
     def add_rating(self,rating):
         self.ratings[rating.item_id] = rating
 
-    def get_ratings(self, rating_list):
+    def get_ratings(self):
         return self.ratings.values()
 
     def __str__(self):
@@ -59,7 +59,7 @@ class Movie:
 #                            'Drama', 'Fantasy', 'Film-Noir', 'Horror', 'Musical',
 #                            'Mystery', 'Romance', 'Sci-Fi', 'Thriller', 'War', 'Western']
         self.ratings = {}
-        self.avg_ratings = None
+        #self.avg_ratings = None
         all_movies[self.ident] = self
 
 
@@ -67,10 +67,10 @@ class Movie:
         self.ratings[rating.user_id] = rating
 
     def get_ratings(self):
-        return self.ratings
+        return self.ratings.values()
 
-    def avg_ratings(self, rating_list):
-        self.avg_ratings = sum([x.stars for x in self.get_ratings()])/len(self.ratings)
+    def avg_ratings(self):
+        return sum([x.stars for x in self.get_ratings()])/len(self.ratings)
 
     def name_for_id(self, ident):
         if self.ident == ident:
