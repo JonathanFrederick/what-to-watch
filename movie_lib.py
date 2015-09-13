@@ -1,5 +1,6 @@
 """Movie Library"""
 import csv
+import math
 
 
 all_movies = {}
@@ -114,13 +115,29 @@ def load_data():
     load_users()
     load_ratings()
 
+def euclidean_distance(list_1, list_2): #takes in two User objects
+    """Given two lists, give the Euclidean distance between them on a scale
+    of 0 to 1. 1 means the two lists are identical.
+    """
+    # Guard against empty lists.
+    if len(list_1) is 0:
+        return 0
+    # Note that this is the same as vector subtraction.
+    differences = [list_1[idx] - list_2[idx] for idx in range(len(list_1))]
+    squares = [diff ** 2 for diff in differences]
+    sum_of_squares = sum(squares)
+    return 1 / (1 + math.sqrt(sum_of_squares))
 
+
+def euclid_prep(user_1, user_2):
+    print([y.stars for y in sorted([x for x in user_1.ratings.values() if x.item_id in user_2.ratings], key=lambda r:r.item_id)])
+    print([y.stars for y in sorted([x for x in user_2.ratings.values() if x.item_id in user_1.ratings], key=lambda r:r.item_id)])
+    return euclidean_distance([y.stars for y in sorted([x for x in user_1.ratings.values() if x.item_id in user_2.ratings], key=lambda r:r.item_id)], [y.stars for y in sorted([x for x in user_2.ratings.values() if x.item_id in user_1.ratings], key=lambda r:r.item_id)])
 
 def main():
     load_data()
-    print(all_users[1].get_top(10))
-    if 814 not in all_users[1].ratings:
-        print("True")
+    print(euclid_prep(all_users[1], all_users[2]))
+    print()
 
 
 
