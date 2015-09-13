@@ -1,4 +1,6 @@
 """Movie Library"""
+import csv
+
 
 all_movies = {}
 all_users = {}
@@ -21,7 +23,7 @@ class User:
         return self.ratings.values()
 
     def __str__(self):
-        return 'User(user_id={})'.format(self.indent)
+        return 'User(user_id={})'.format(self.ident)
 
     def __repr__(self):
         return self.__str__()
@@ -59,7 +61,6 @@ class Movie:
 #                            'Drama', 'Fantasy', 'Film-Noir', 'Horror', 'Musical',
 #                            'Mystery', 'Romance', 'Sci-Fi', 'Thriller', 'War', 'Western']
         self.ratings = {}
-        #self.avg_ratings = None
         all_movies[self.ident] = self
 
 
@@ -82,8 +83,35 @@ class Movie:
     def __repr__(self):
         return self.__str__()
 
+
+def load_movies():
+    with open('ml-100k/u.item', encoding='latin_1') as f:
+        reader = csv.DictReader(f, fieldnames=['movie_id', 'movie_title', '', '', 'something_else' ], delimiter='|')
+        for row in reader:
+            Movie(int(row['movie_id']), row['movie_title'])
+
+def load_users():
+    with open('ml-100k/u.user') as f:
+        reader = csv.DictReader(f, fieldnames=['user_id'], delimiter='|')
+        for row in reader:
+            User(int(row['user_id']))
+
+def load_ratings():
+    with open('ml-100k/u.data') as f:
+        reader = csv.DictReader(f, fieldnames=['user_id', 'item_id', 'rating'], delimiter='\t')
+        for row in reader:
+            Rating(int(row['user_id']), int(row['item_id']), int(row['rating']))
+
+def load_data():
+    load_movies()
+    load_users()
+    load_ratings()
+
+
+
 def main():
-    pass
+    load_data()
+    print(all_movies[1].ratings)
 
 
 
