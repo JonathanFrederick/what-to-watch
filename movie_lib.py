@@ -23,8 +23,10 @@ class User:
         return self.ratings.values()
 
 
-#    def get_top_list(self, num):
-#        return sorted([all_movies[] for ])
+    def get_top(self, num):
+       return sorted([mov for mov in all_movies.values()
+                          if mov.ident not in self.ratings],
+                     key=lambda m: m.avg_ratings(), reverse=True)[:num]
 
 
     def __str__(self):
@@ -116,7 +118,10 @@ def load_data():
 
 def main():
     load_data()
-    print(all_movies[1].ratings)
+    print(all_users[1].get_top(10))
+    if 814 not in all_users[1].ratings:
+        print("True")
+
 
 
 
