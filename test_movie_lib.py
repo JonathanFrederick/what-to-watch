@@ -42,6 +42,11 @@ def test_user_get_ratings():
     assert sum([x.stars for x in all_users[9].get_ratings()]) == 94
 
 
+def test_user_get_top_list():
+    """tests User.get_top"""
+    assert 814 not in all_users[1].ratings
+    assert len(all_users[1].get_top(10)) == 10
+    assert all_users[1].get_top(10)[0].avg_ratings() > all_users[1].get_top(20)[19].avg_ratings()
 
 
 def test_movie_init():
