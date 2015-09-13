@@ -22,6 +22,11 @@ class User:
     def get_ratings(self):
         return self.ratings.values()
 
+
+#    def get_top_list(self, num):
+#        return sorted([all_movies[] for ])
+
+
     def __str__(self):
         return 'User(user_id={})'.format(self.ident)
 
@@ -71,7 +76,7 @@ class Movie:
         return self.ratings.values()
 
     def avg_ratings(self):
-        return sum([x.stars for x in self.get_ratings()])/len(self.ratings)
+        return round(sum([x.stars for x in self.get_ratings()])/len(self.ratings),1)
 
     def name_for_id(self, ident):
         if self.ident == ident:
