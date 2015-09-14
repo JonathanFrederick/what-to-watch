@@ -23,6 +23,11 @@ class User:
     def get_ratings(self):
         return self.ratings.values()
 
+    def get_similar_users(self):
+        return sorted([user for user in all_users.values() if user!=self], key=lambda u: euclidean_distance(*euclid_prep(self, u)), reverse=True)
+
+    def recommendations(self):
+        return sorted([movie for movie in all_])
 
     def get_top(self, num):
        return sorted([mov for mov in all_movies.values()
@@ -130,15 +135,16 @@ def euclidean_distance(list_1, list_2): #takes in two User objects
 
 
 def euclid_prep(user_1, user_2):
-    print([y.stars for y in sorted([x for x in user_1.ratings.values() if x.item_id in user_2.ratings], key=lambda r:r.item_id)])
-    print([y.stars for y in sorted([x for x in user_2.ratings.values() if x.item_id in user_1.ratings], key=lambda r:r.item_id)])
-    return euclidean_distance([y.stars for y in sorted([x for x in user_1.ratings.values() if x.item_id in user_2.ratings], key=lambda r:r.item_id)], [y.stars for y in sorted([x for x in user_2.ratings.values() if x.item_id in user_1.ratings], key=lambda r:r.item_id)])
+    list_1=[y.stars for y in sorted([x for x in user_1.ratings.values() if x.item_id in user_2.ratings], key=lambda r:r.item_id)]
+    list_2=[y.stars for y in sorted([x for x in user_2.ratings.values() if x.item_id in user_1.ratings], key=lambda r:r.item_id)]
+    return list_1, list_2
+
+
 
 def main():
     load_data()
-    print(euclid_prep(all_users[1], all_users[2]))
-    print()
-
+    #print(euclidean_distance(*euclid_prep(all_users[1], all_users[2])))
+    print(all_users[1].get_similar_users())
 
 
 
