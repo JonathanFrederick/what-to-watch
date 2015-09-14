@@ -17,7 +17,10 @@ def get_int(low, high, prompt):
 
 def rate_movie():
     while True:
-        iden = int(input("Please enter the ID of the movie you'd like to rate >>"))
+        try:
+            iden = int(input("Please enter the ID of the movie you'd like to rate >>"))
+        except:
+            print("Not a valid movie ID")
         if iden in all_movies:
             rate = get_int(0, 5, "Please enter your selected rating for "+all_movies[iden].title+"\nEnter a number 1 through 5 where 5 is more favorable or enter 0 to back out >>")
             if rate > 0:
@@ -51,7 +54,9 @@ def main_menu():
         elif choice == 4:
             if len(all_users[0].ratings) > 3:
                 num = get_int(1, 20, "Please enter a desired number of recommendations between 1 and 20")
-                all_users[0].recommendations(num)
+                for movie in all_users[0].recommendations(num):
+                    print(movie.title)
+
             else:
                 print("Rate more movies for this feature")
         else:
