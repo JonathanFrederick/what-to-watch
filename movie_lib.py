@@ -152,6 +152,15 @@ def euclid_prep(user_1, user_2):
     list_2=[y.stars for y in sorted([x for x in user_2.ratings.values() if x.item_id in user_1.ratings], key=lambda r:r.item_id)]
     return list_1, list_2
 
+def print_movies_by_avg():
+    count = 1
+    for movie in sorted(all_movies.values(), key=lambda m: m.avg_ratings(), reverse=True):
+        if count % 20 == 1:
+            print("RANK\tID\tAVG\tTITLE")
+        print(count, '\t'+str(movie.ident), '\t'+str(movie.avg_ratings()), '\t'+movie.title)
+        if count % 20 == 0:
+            input("Press enter to view the next 20")
+        count+=1
 
 
 def main():
