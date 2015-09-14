@@ -26,8 +26,21 @@ class User:
     def get_similar_users(self):
         return sorted([user for user in all_users.values() if user!=self], key=lambda u: euclidean_distance(*euclid_prep(self, u)), reverse=True)
 
-    def recommendations(self):
-        return sorted([movie for movie in all_])
+    def recommendations(self, num):
+        recs = {}
+        while len(recs) < num*5:
+            for usr in self.get_similar_users():
+                for rat in usr.ratings.values():
+                    if rat.item_id not in self.ratings and rat.stars > 3:
+                        if rat.item_id in recs:
+                            holder = rat.stars*euclidean_distance(*euclid_prep(self, usr))
+                            if holder > recs[rat.item_id][1]:
+                                recs[rat.item_id] = [rat, holder]
+                        else:
+                            recs[rat.item_id] = [rat, rat.stars*euclidean_distance(*euclid_prep(self, usr))]
+        sort_recs = sorted(recs.values(), key=lambda r: r[1], reverse=True)
+        return [all_movies[x[0].item_id] for x in sort_recs][:num]
+
 
     def get_top(self, num):
        return sorted([mov for mov in all_movies.values()
@@ -144,8 +157,8 @@ def euclid_prep(user_1, user_2):
 def main():
     load_data()
     #print(euclidean_distance(*euclid_prep(all_users[1], all_users[2])))
-    print(all_users[1].get_similar_users())
-
+    #print([euclidean_distance(*euclid_prep(all_users[1], user)) for user in all_users[1].get_similar_users()])
+    print(all_users[1].recommendations(10))
 
 
 if __name__ == '__main__':
