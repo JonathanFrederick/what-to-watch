@@ -3,7 +3,10 @@
 ## Instructions
   1. Download the [100k MovieLens data](http://files.grouplens.org/datasets/movielens/ml-100k.zip)
   2. Unzip to the directory with music_lib (You should have an ml-100k directory within the directory)
-  
+  3. Navigate to your directory with movie_lib.py, movie_rec.py and ml-100k/
+  4. Run ```python movie_rec.py```
+  5. Follow instructions given
+
 ## Description
 
 Use the MovieLens data to recommend movies to users.
