@@ -24,7 +24,7 @@ class User:
         return self.ratings.values()
 
     def get_similar_users(self):
-        return sorted([user for user in all_users.values() if user!=self], key=lambda u: euclidean_distance(*euclid_prep(self, u)), reverse=True)
+        return sorted([user for user in all_users.values() if euclidean_distance(*euclid_prep(self, user)) < .33], key=lambda u: euclidean_distance(*euclid_prep(self, u)), reverse=True)
 
     def recommendations(self, num):
         recs = {}
